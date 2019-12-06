@@ -15,10 +15,10 @@
  ![Current Version](https://i.imgur.com/bGUrtFF.png) <br>
  
 # Installation
- Download this repository as a ZIP (top-right).  <br>
- Inside Blender, go to Preferences>Add-Ons. <br>
- Press the Install button (top-right) and select the downloaded ZIP. <br>
- Enable add-on (search or find under System category). <br>
+ - Download this repository as a ZIP (top-right).  <br>
+ - Inside Blender, go to Preferences>Add-Ons. <br>
+ - Press the Install button (top-right) and select the downloaded ZIP. <br>
+ - Enable add-on (search or find under System category). <br>
 
 ## Credits
 Made by me, Woeful_Wolf, in about an hour :P <br>
