@@ -1,7 +1,7 @@
 # Blender Rich Presence
  Adds Discord's rich presence system to Blender. <br>
  
- [img]https://i.imgur.com/ZXJHJlg.png[/img]
+ ![img](https://i.imgur.com/ZXJHJlg.png)
 
 # Installation
  Download this repository as a ZIP (top-right).  <br>
