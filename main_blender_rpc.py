@@ -3,6 +3,7 @@ import bpy
 from bpy.app.handlers import persistent
 import time
 import atexit
+import sys
 
 update_delay = 15.0
 
@@ -51,7 +52,10 @@ def update():
 
     global project_path
     if bpy.data.is_saved:
-        project_path = str(bpy.data.filepath).split('\\')[-1]
+        if sys.platform == 'win32':
+            project_path = str(bpy.data.filepath).split('\\')[-1]
+        else:
+            project_path = str(bpy.data.filepath).split('/')[-1]
     else:
         project_path = 'Project Not Saved'
 
