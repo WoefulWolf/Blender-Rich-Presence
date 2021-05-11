@@ -19,8 +19,9 @@ def main():
     presence.connect()
 
     bpy.app.handlers.load_post.append(start_timer)
-    bpy.app.handlers.render_pre.append(render_started)
-    bpy.app.handlers.render_post.append(render_ended)
+    bpy.app.handlers.render_init.append(render_started)
+    bpy.app.handlers.render_complete.append(render_ended)
+    bpy.app.handlers.render_cancel.append(render_ended)
 
     atexit.register(close)
 
@@ -35,22 +36,19 @@ def start_timer(dummy):
 
 @persistent
 def render_started(dummy):
-    print('render started')
     if bpy.app.timers.is_registered(update):
         bpy.app.timers.unregister(update)
         
     start_time = int(round(time.time() * 1000))
-    presence.update(large_image='blender_icon', large_text=app_version, details=project_path, state='RENDERING:', start=start_time)
+    presence.update(large_image='blender_icon', large_text=app_version, details=get_project_path(), state='RENDERING:', start=start_time)
 
 @persistent
 def render_ended(dummy):
-    print('render ended')
     bpy.app.timers.register(update)
-    presence.update(large_image='blender_icon', large_text=app_version, details=project_path, state=project_info)
+    presence.update(large_image='blender_icon', large_text=app_version, details=get_project_path(), state=get_project_info())
 
-def update():
-
-    global project_path
+def get_project_path():
+    project_path = "None"
     if bpy.data.is_saved:
         if sys.platform == 'win32':
             project_path = str(bpy.data.filepath).split('\\')[-1]
@@ -58,20 +56,19 @@ def update():
             project_path = str(bpy.data.filepath).split('/')[-1]
     else:
         project_path = 'Project Not Saved'
+    return project_path
 
-    total_verts = 0
-    total_faces = 0
-    for obj in bpy.data.objects:
-        if obj.type == 'MESH':
-            total_verts += len(obj.data.vertices)
-            total_faces += len(obj.data.polygons)
+def get_project_info():
+    stats = bpy.context.scene.statistics(bpy.context.view_layer)
+    stats_split = stats.split("|")
+    verts = stats_split[2].strip().split(":")[1]
+    faces = stats_split[3].strip().split(":")[1]
 
-    global project_info
-    project_info = 'Verts: ' + str(total_verts) + ' | Faces: ' + str(total_faces)
+    project_info = "Verts: " + verts + " | " + "Faces: " + faces
+    return project_info
 
-    presence.update(large_image='blender_icon', large_text=app_version, details=project_path, state=project_info)
-
-
+def update():
+    presence.update(large_image='blender_icon', large_text=app_version, details=get_project_path(), state=get_project_info())
     return update_delay
 
 def close():

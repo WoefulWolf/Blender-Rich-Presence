@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Discord Rich Presence for Blender",
     "author": "Woeful_Wolf",
-    "version": (0, 2, 0),
+    "version": (0, 3, 0),
     "blender": (2, 80, 0),
     "location": "None",
     "description": "Discord Rich Presence for Blender",
